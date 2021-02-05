@@ -1,7 +1,8 @@
-var bananaImage,obstacleImg,obstacleGroup,score,backImage,player_running,back2,BananaGroup,StoneGroup,monkey,count,ground,back,gameState;
+var bananaImage,obstacleImg,obstacleGroup,score,backImage,player_running,back2,BananaGroup,StoneGroup,monkey,count,ground,back,gameState,backImage2;
 
 function preload(){
   backImage = loadImage("jungle.jpg");
+  backImage2 = loadImage("Game-over-2.png");
  player_running = loadAnimation("Monkey_01.png","Monkey_02.png","Monkey_03.png","Monkey_04.png","Monkey_05.png","Monkey_06.png","Monkey_07.png","Monkey_08.png","Monkey_09.png","Monkey_10.png");
   
  bananaImage = loadImage("banana.png");
@@ -46,7 +47,7 @@ textFont("CONSOLAS");
 
 function draw() {
   background(220);
-  if(gameState===PLAY){
+  if(gameState==="PLAY"){
   monkey.collide(ground);
   
   
@@ -81,14 +82,16 @@ back.velocityX = -(6 + 3*count/100);
    gameState = "END";
   }}
   
-  if(gameState){
-      
-    
+  if(gameState==="END"){
+      monkey.destroy();
+      BananaGroup.destroyEach();
+      StoneGroup.destroyEach();
+      back.addImage('backImage2','Game-over-2.png');
   }
 drawSprites();  
 text("SURVIVAL TIME:"+count,150,70);
    text("SCORE:"+score,180,85);
-   
+}
   
 
 function Banana(){
@@ -103,8 +106,6 @@ function Banana(){
     banana.lifetime = 90;
     BananaGroup.add(banana);
   }
-  
-  
 }
 
 function Stone(){
@@ -117,7 +118,4 @@ function Stone(){
     stone.lifetime = 90;
     StoneGroup.add(stone);
   }
-  
-  
-  
 }
